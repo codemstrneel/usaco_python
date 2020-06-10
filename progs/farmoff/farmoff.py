@@ -1,3 +1,4 @@
+"""
 Problem 7: The Grand Farm-off [Haitao Mao, 2009]
 
 Farmer John owns 3*N (1 <= N <= 500,000) cows surprisingly numbered
@@ -65,3 +66,68 @@ OUTPUT DETAILS:
 
 The two cows with the highest utility are cow 5 and 6, and their combined
 weight is 21+30=51.
+"""
+
+
+x=input().split()
+
+N=int(x[0])
+
+a=int(x[1])
+b=int(x[2])
+c=int(x[3])
+d=int(x[4])
+e=int(x[5])
+f=int(x[6])
+g=int(x[7])
+h=int(x[8])
+M=int(x[9])
+allArr=[]
+for i in range(3*N):
+  weightNumber=(((a%d)*(i**5))+((b%d)*(i**2))+c)%d
+  utilNum=(e*(i**5)+f*(i**3)+g)% h
+  allArr.append([utilNum,weightNumber])
+
+allArr.sort(reverse=True)
+
+allNumbers=[]
+i=0
+while i<3*N:
+  currNum=allArr[i][0]
+  currArr=[]
+  while i<3*N and allArr[i][0]==currNum:
+    currArr.append(allArr[i])
+    i+=1
+  allNumbers.append(currArr)
+
+#print(allNumbers)
+for i in range(len(allNumbers)):
+  x=allNumbers[i]
+  currArr=[]
+  
+  for j in range(len(x)-1,-1,-1):
+
+    currArr.append(x[j])
+
+  allNumbers[i]=currArr
+i=0
+x=0
+totalWeight=0
+prevNum=0
+while i<N:
+  prevNum=i
+  currIdx=0
+  currArr=allNumbers[x]
+
+  while i<N and i<len(allNumbers[x])+prevNum:
+    totalWeight+=allNumbers[x][currIdx][1]
+    i+=1
+    currIdx+=1
+  
+  x+=1
+
+print(totalWeight%M)
+
+
+
+
